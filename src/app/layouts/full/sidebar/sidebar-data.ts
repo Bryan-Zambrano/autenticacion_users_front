@@ -10,6 +10,11 @@ export const navItems: NavItem[] = [
     route: '/dashboard',
   },
   {
+    displayName: 'Home',
+    iconName: 'home',
+    route: '/home',
+  },
+  {
     navCap: 'Ui Components',
   },
   {

@@ -4,7 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { LocalStorageService } from 'src/app/services/auth.service';
-import { UserI, UserService } from 'src/app/services/user.service';
+import { ApiResponseI } from 'src/app/services/interfaces/shared.interface';
+import { UserI } from 'src/app/services/interfaces/user.interface';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -32,8 +34,8 @@ export class AppSideLoginComponent implements OnInit {
     this.spinner.show();
     this._userService.login(this.loginForm.value).subscribe(
       {
-        next: (rs: UserI) => {
-          this._localStorageService.saveData("user", rs);
+        next: (rs:ApiResponseI<UserI>) => {
+          this._localStorageService.saveData("user", rs.data);
           this.spinner.hide();
           this.router.navigateByUrl("/");
         },

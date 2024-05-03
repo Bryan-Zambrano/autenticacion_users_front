@@ -6,7 +6,7 @@ export class LocalStorageService {
   constructor() { }
 
   saveData(key: string, value: any) {
-    localStorage.setItem("token", value);
+    localStorage.setItem(key, value);
   }
 
   getData(key: string): any {

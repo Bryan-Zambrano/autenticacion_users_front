@@ -58,7 +58,7 @@
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
               >Nombres</mat-label
             >
-              <input formControlName="personFirstName" matInput />
+              <input formControlName="personFirstName" matInput (ngModelChange)="generateEmail()" />
               <mat-error class="mt-3" *ngIf="registerForm.get('personFirstName')!.hasError('required') && registerForm.get('personFirstName')!.touched">Nombres son obligatorios</mat-error>
               <mat-error class="mt-3" *ngIf="registerForm.get('personFirstName')!.hasError('maxlength') && registerForm.get('personFirstName')!.touched">El máximo de caracteres permitidos es 60</mat-error>
 
@@ -68,7 +68,7 @@
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
               >Apellidos</mat-label
             >
-              <input formControlName="personLastName" matInput />
+              <input formControlName="personLastName" matInput (ngModelChange)="generateEmail()" />
               <mat-error class="mt-3" *ngIf="registerForm.get('personLastName')!.hasError('required') && registerForm.get('personLastName')!.touched">Apellidos son obligatorios</mat-error>
               <mat-error class="mt-3" *ngIf="registerForm.get('personLastName')!.hasError('maxlength') && registerForm.get('personLastName')!.touched">El máximo de caracteres permitidos es 60</mat-error>
 
@@ -121,7 +121,23 @@
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
               >Email</mat-label
             >
-              <input formControlName="userEmail" matInput type="email" />
+              <input formControlName="userEmail" matInput type="email" (keyup.enter)="searchEmail()" />
+              <button
+                 [disabled]="registerForm.get('userEmail')?.invalid"
+                 type="button"
+                 mat-icon-button
+                 matSuffix
+                 (click)="searchEmail()">
+                <i-tabler
+                class="routeIcon"
+                name="{{ 'search' }}"
+                matListItemIcon
+              ></i-tabler>
+              </button>
+
+              <mat-error *ngIf="registerForm.get('userEmail')!.hasError('required') && registerForm.get('userEmail')!.touched">El correo electrónico es obligatorio</mat-error>
+              <mat-error *ngIf="registerForm.get('userEmail')!.hasError('email') && registerForm.get('userEmail')!.touched">Ingrese un correo electrónico válido</mat-error>
+              <mat-error *ngIf="registerForm.get('userEmail')!.hasError('maxlength')">El correo electrónico no puede tener más de 120 caracteres</mat-error>
             </mat-form-field>
 
             <!-- password -->
@@ -155,14 +171,17 @@
             </mat-form-field>
 
 
-            <a
+            <!-- <a
               [routerLink]="['/']"
               mat-flat-button
               color="primary"
               class="w-100"
             >
               Registrar
-            </a>
+            </a> -->
+            <button mat-flat-button color="primary" class="w-100" type="submit" [disabled]="registerForm.invalid">
+              Registrar
+            </button>
             <!-- input -->
           </form>
           <span class="d-block f-w-500 text-center m-t-24"

@@ -2,14 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { UserI } from './interfaces/user.interface';
+import { ApiResponseI } from './interfaces/shared.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
   constructor(private httpClient: HttpClient) { }
 
-  public login(user: UserRequest): Observable<UserI> {
-    console.log(user);
-    return this.httpClient.post<UserI>(`${environment.urlLocalApi}/user/login`, user);
+  public login(user: UserRequest): Observable<ApiResponseI<UserI>> {
+    return this.httpClient.post<ApiResponseI<UserI>>(`${environment.urlLocalApi}/user/login`, user);
+  }
+
+  public getUserByEmail(userEmail: string): Observable<ApiResponseI<any>> {
+    const params = { email: userEmail };
+    return this.httpClient.get<ApiResponseI<any>>(`${environment.urlLocalApi}/user/userByEmail`, { params: params });
   }
 
 }
@@ -18,23 +24,3 @@ export interface UserRequest {
   userName: string,
   userPassword: string
 }
-
-export interface UserI {
-  id: number;
-  userName: string;
-  userPassword: string;
-  userEmail: string;
-  userIsActive: boolean;
-  statusUser: boolean;
-  userPerson: PersonI;
-  rolList: RolI[];
-}
-
-export interface PersonI {
-  // Define la estructura de la entidad Person aquí según tu caso
-}
-
-export interface RolI {
-  // Define la estructura de la entidad Rol aquí según tu caso
-}
-

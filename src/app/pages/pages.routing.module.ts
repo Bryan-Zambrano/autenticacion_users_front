@@ -3,10 +3,15 @@ import { AppDashboardComponent } from './dashboard/dashboard.component';
 
 export const PagesRoutes: Routes = [
   {
-    path: '',
+    path: 'dashboard',
     component: AppDashboardComponent,
     data: {
       title: 'Starter Page',
     },
   },
+
 ];
+
+
+
+
