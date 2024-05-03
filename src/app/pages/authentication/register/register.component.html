@@ -59,7 +59,8 @@
               >Nombres</mat-label
             >
               <input formControlName="personFirstName" matInput />
-              <mat-error *ngIf="registerForm.get('personFirstName')!.invalid && registerForm.get('personFirstName')!.touched">Nombres son obligatorios</mat-error>
+              <mat-error class="mt-3" *ngIf="registerForm.get('personFirstName')!.hasError('required') && registerForm.get('personFirstName')!.touched">Nombres son obligatorios</mat-error>
+              <mat-error class="mt-3" *ngIf="registerForm.get('personFirstName')!.hasError('maxlength') && registerForm.get('personFirstName')!.touched">El máximo de caracteres permitidos es 60</mat-error>
 
             </mat-form-field>
 
@@ -68,14 +69,18 @@
               >Apellidos</mat-label
             >
               <input formControlName="personLastName" matInput />
-              <mat-error *ngIf="registerForm.get('personLastName')!.invalid && registerForm.get('personLastName')!.touched">Apellidos son obligatorios</mat-error>
+              <mat-error class="mt-3" *ngIf="registerForm.get('personLastName')!.hasError('required') && registerForm.get('personLastName')!.touched">Apellidos son obligatorios</mat-error>
+              <mat-error class="mt-3" *ngIf="registerForm.get('personLastName')!.hasError('maxlength') && registerForm.get('personLastName')!.touched">El máximo de caracteres permitidos es 60</mat-error>
+
             </mat-form-field>
 
 
             <mat-form-field appearance="outline" class="w-100" color="primary">
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block">No. Identificación</mat-label>
               <input formControlName="personIdentification" matInput type="text" placeholder="Ingrese 10 dígitos numéricos">
-              <mat-error *ngIf="registerForm.get('personIdentification')!.invalid && registerForm.get('personIdentification')!.touched"></mat-error>
+              <mat-error class="mt-3" *ngIf="registerForm.get('personIdentification')!.hasError('required') && registerForm.get('personIdentification')!.touched">El campo es obligatorio</mat-error>
+              <mat-error class="mt-3" *ngIf="registerForm.get('personIdentification')!.hasError('minlength') && !registerForm.get('personIdentification')!.hasError('required') && registerForm.get('personIdentification')!.touched">Debe tener al menos 10 caracteres</mat-error>
+              <mat-error class="mt-3" *ngIf="registerForm.get('personIdentification')!.hasError('pattern') && !registerForm.get('personIdentification')!.hasError('required') && !registerForm.get('personIdentification')!.hasError('minlength') && registerForm.get('personIdentification')!.touched">Debe ser un número de 10 dígitos</mat-error>
             </mat-form-field>
 
 
@@ -85,6 +90,7 @@
               <input formControlName="personBirthDate" matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
+              <mat-error class="mt-3" *ngIf="registerForm.get('personBirthDate')!.invalid && registerForm.get('personBirthDate')!.touched">La fecha de nacimiento es obligatoria</mat-error>
             </mat-form-field>
 
 
@@ -94,7 +100,21 @@
               <mat-label class="mat-subtitle-2 f-s-14 f-w-600 m-b-12 d-block"
               >Usuario</mat-label
             >
-              <input formControlName="userName" matInput type="password" />
+              <input formControlName="userName" matInput type="text" />
+              <mat-error class="mt-3" *ngIf="registerForm.get('userName')!.errors?.['required'] && registerForm.get('userName')!.touched">
+                El nombre de usuario es obligatorio
+              </mat-error>
+              <mat-error class="mt-3" *ngIf="!registerForm.get('userName')!.errors?.['required'] && registerForm.get('userName')!.errors?.['pattern'] && registerForm.get('userName')!.touched">
+                No utilizar signos y al menos una letra mayúscula y un número
+              </mat-error>
+              <mat-error class="mt-3" *ngIf="!registerForm.get('userName')!.errors?.['required'] && !registerForm.get('userName')!.errors?.['pattern'] && registerForm.get('userName')!.errors?.['minlength'] && registerForm.get('userName')!.touched">
+                El nombre de usuario debe tener al menos 8 caracteres
+              </mat-error>
+              <mat-error class="mt-3" *ngIf="!registerForm.get('userName')!.errors?.['required'] && !registerForm.get('userName')!.errors?.['pattern'] && !registerForm.get('userName')!.errors?.['minlength'] && registerForm.get('userName')!.errors?.['maxlength'] && registerForm.get('userName')!.touched">
+                El nombre de usuario no puede tener más de 20 caracteres
+              </mat-error>
+
+
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100" color="primary">
@@ -110,6 +130,19 @@
               >Contraseña</mat-label
             >
               <input formControlName="userPassword" matInput type="password" />
+              <mat-error class="mt-3" *ngIf="registerForm.get('userPassword')!.errors?.['required'] && registerForm.get('userPassword')!.touched">
+                La contraseña es obligatoria
+              </mat-error>
+              <mat-error class="mt-3" *ngIf="!registerForm.get('userPassword')!.errors?.['required'] && registerForm.get('userPassword')!.errors?.['pattern'] && registerForm.get('userPassword')!.touched">
+                Ingresa  al menos un signo y una letra mayúscula, y no espacios en blanco
+              </mat-error>
+              <mat-error class="mt-3" *ngIf="!registerForm.get('userPassword')!.errors?.['required'] && !registerForm.get('userPassword')!.errors?.['pattern'] && registerForm.get('userPassword')!.errors?.['minlength'] && registerForm.get('userPassword')!.touched">
+                La contraseña debe tener al menos 8 caracteres
+              </mat-error>
+              <mat-error class="mt-3" *ngIf="!registerForm.get('userPassword')!.errors?.['required'] && !registerForm.get('userPassword')!.errors?.['pattern'] && !registerForm.get('userPassword')!.errors?.['minlength'] && registerForm.get('userPassword')!.errors?.['maxlength'] && registerForm.get('userPassword')!.touched">
+                La contraseña no puede tener más de 50 caracteres
+              </mat-error>
+
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="w-100" color="primary">
@@ -118,6 +151,7 @@
                 <mat-option value="cliente">Cliente</mat-option>
                 <mat-option value="administrador">Administrador</mat-option>
               </mat-select>
+              <mat-error class="mt-3" *ngIf="registerForm.get('userRole')!.errors?.['required'] && registerForm.get('userRole')!.touched">Debe seleccionar un tipo de usuario</mat-error>
             </mat-form-field>
 
 

@@ -30,7 +30,7 @@ export class AppSideRegisterComponent implements OnInit {
       ]],
       userPassword: ['', [
         Validators.required,
-        Validators.pattern(/.*[^\\W_].*/), // Debe contener al menos un signo
+        Validators.pattern(/.*[\W_].*/), // Debe contener al menos un signo
         Validators.pattern(/.*[A-Z].*/), // Debe contener al menos una letra mayúscula
         Validators.pattern(/^\S*$/), // No debe contener espacios en blanco
         Validators.minLength(8), // Longitud mínima de 8 caracteres
