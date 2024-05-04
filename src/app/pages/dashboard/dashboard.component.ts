@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,6 +23,7 @@ import {
   ApexResponsive,
   NgApexchartsModule,
 } from 'ng-apexcharts';
+import { LocalStorageService } from 'src/app/services/auth.service';
 
 interface month {
   value: string;
@@ -149,7 +150,7 @@ const ELEMENT_DATA: productsData[] = [
     CommonModule,
   ],
 })
-export class AppDashboardComponent {
+export class AppDashboardComponent implements AfterViewInit {
   @ViewChild('chart') chart: ChartComponent = Object.create(null);
 
   public profitExpanceChart!: Partial<profitExpanceChart> | any;
@@ -240,7 +241,7 @@ export class AppDashboardComponent {
     },
   ];
 
-  constructor() {
+  constructor(private _localStorageService: LocalStorageService,) {
     // sales overview chart
     this.profitExpanceChart = {
       series: [
@@ -413,5 +414,9 @@ export class AppDashboardComponent {
         },
       },
     };
+  }
+  ngAfterViewInit(): void {
+    var user =this._localStorageService.decodeToken(this._localStorageService.getData("token")).sub;
+    console.log(user);
   }
 }

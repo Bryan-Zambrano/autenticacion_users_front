@@ -23,6 +23,8 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -34,6 +36,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    ToastrModule,
     TablerIconsModule.pick(TablerIcons),
     NgxSpinnerModule,
     MatSelectModule,

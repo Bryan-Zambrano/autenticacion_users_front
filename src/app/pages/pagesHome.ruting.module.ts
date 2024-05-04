@@ -1,17 +1,14 @@
 import { Routes } from '@angular/router';
 import { AppDashboardComponent } from './dashboard/dashboard.component';
+import { AppHomeComponent } from './home/home.component';
 
-export const PagesRoutes: Routes = [
+export const PagesRoutesHome: Routes = [
   {
     path: '',
-    component: AppDashboardComponent,
+    component: AppHomeComponent,
     data: {
       title: 'Starter Page',
     },
   },
 
 ];
-
-
-
-

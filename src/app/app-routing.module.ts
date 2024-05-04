@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlankComponent } from './layouts/blank/blank.component';
 import { FullComponent } from './layouts/full/full.component';
+import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
         path: '',
         redirectTo: '/dashboard',
         pathMatch: 'full',
+        //canActivate:[AuthGuard]
       },
       {
         path: 'dashboard',
@@ -22,7 +24,7 @@ const routes: Routes = [
       {
         path: 'home',
         loadChildren: () =>
-          import('./pages/pages.module').then((m) => m.PagesModule),
+          import('./pages/home.module').then((m) => m.HomeModule),
       },
 
 
@@ -39,6 +41,7 @@ const routes: Routes = [
           import('./pages/extra/extra.module').then((m) => m.ExtraModule),
       },
     ],
+    canActivate:[AuthGuard]
   },
   {
     path: '',

@@ -1,0 +1,82 @@
+<div class="container" *ngIf="user && user.length > 0">
+  <div class="row mt-5">
+    <div class="col">
+      <h2>Información del Usuario</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>Usuario</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="form-group">
+                <mat-label>User ID:</mat-label>
+                <span class="form-control">{{ user[0].id }}</span>
+              </div>
+              <div class="form-group">
+                <mat-label>Username:</mat-label>
+                <span class="form-control">{{ user[0].username }}</span>
+              </div>
+              <div class="form-group">
+                <mat-label>Email:</mat-label>
+                <span class="form-control">{{ user[0].userEmail }}</span>
+              </div>
+              <div class="form-group">
+                <mat-label>Active:</mat-label>
+                <span class="form-control">{{ user[0].userIsActive ? 'Yes' : 'No' }}</span>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-md-6">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>User Information</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="form-group">
+                <mat-label>Status:</mat-label>
+                <span class="form-control">{{ user[0].statusUser ? 'Active' : 'Inactive' }}</span>
+              </div>
+              <div class="form-group">
+                <mat-label>Person:</mat-label>
+                <span class="form-control">{{ user[0].userPerson.personFirstName }} {{ user[0].userPerson.personLastName }}</span>
+              </div>
+              <div class="form-group">
+                <mat-label>Roles:</mat-label>
+                <ul class="list-group">
+                  <li *ngFor="let role of user[0].rolList" class="list-group-item">{{ role.rolName }}</li>
+                </ul>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col">
+      <h2>Historial de Conexiones</h2>
+      <div *ngFor="let log of logsUser">
+        <mat-card class="mb-3">
+          <mat-card-header>
+            <mat-card-title>Date: {{ log.logDate | date: 'dd/MM/yyyy HH:mm:ss' }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Estado de Conexión: {{ log.logStatus ? 'Ingreso Exitoso' : 'Ingreso Fallido' }}</p>
+            <!-- <p>Username: {{ log.logUser.username }}</p>
+            <p>Email: {{ log.logUser.userEmail }}</p>
+            <p>Active: {{ log.logUser.userIsActive ? 'Yes' : 'No' }}</p>
+            <p>User Status: {{ log.logUser.statusUser ? 'Active' : 'Inactive' }}</p>
+            <p>Person Name: {{ log.logUser.userPerson.personFirstName }} {{ log.logUser.userPerson.personLastName }}</p>
+            <p>Roles:</p>
+            <ul class="list-group">
+              <li *ngFor="let role of log.logUser.rolList" class="list-group-item">{{ role.rolName }}</li>
+            </ul> -->
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

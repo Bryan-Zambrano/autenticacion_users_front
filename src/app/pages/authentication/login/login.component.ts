@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { LocalStorageService } from 'src/app/services/auth.service';
 import { ApiResponseI } from 'src/app/services/interfaces/shared.interface';
 import { UserI } from 'src/app/services/interfaces/user.interface';
@@ -17,7 +18,8 @@ export class AppSideLoginComponent implements OnInit {
     private router: Router,
     private _userService: UserService,
     private _localStorageService: LocalStorageService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private toastr: ToastrService
   ) { }
 
   loginForm!: FormGroup;
@@ -34,16 +36,19 @@ export class AppSideLoginComponent implements OnInit {
     this.spinner.show();
     this._userService.login(this.loginForm.value).subscribe(
       {
-        next: (rs:ApiResponseI<UserI>) => {
-          this._localStorageService.saveData("user", rs.data);
+        next: (rs:any) => {
+          this._localStorageService.saveData("token", rs.token);
+          var user =this._localStorageService.decodeToken(this._localStorageService.getData("token")).sub;
+          this.toastr.success('Inicio de sesión exitoso', user);
           this.spinner.hide();
           this.router.navigateByUrl("/");
         },
         error: (error: HttpErrorResponse) => {
           this.spinner.hide();
+          this.toastr.error("Error al ingreso",error.error.text);
         },
         complete: () => {
-          alert("complete");
+          console.log("Complete login ");
         },
       }
     );
